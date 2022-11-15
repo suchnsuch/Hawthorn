@@ -1,10 +1,7 @@
-using System;
-using System.Collections.Generic;
+namespace BehaviorTrees;
 
-namespace BehaviorTrees
+public class Blackboard
 {
-	public class Blackboard
-	{
-		Dictionary<string, object> Values = new Dictionary<string, object>();
-	}
+	Dictionary<string, object> Values = new Dictionary<string, object>();
 }
+

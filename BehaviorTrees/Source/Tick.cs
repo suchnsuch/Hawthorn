@@ -1,16 +1,15 @@
-namespace BehaviorTrees
+namespace BehaviorTrees;
+
+public interface Tick<A>
 {
-	public interface Tick<A>
-	{
-		A Actor { get; }
-		Blackboard State { get; }
+	A Actor { get; }
+	Blackboard State { get; }
 
-		float Delta { get; }
+	float Delta { get; }
 
-		T GetState<T>(IStatefulBehaviorNode<A> node);
-		
-		void SetState(IStatefulBehaviorNode<A> node, object value);
+	T? GetState<T>(IStatefulBehaviorNode<A> node);
+	
+	void SetState(IStatefulBehaviorNode<A> node, object? value);
 
-		bool MarkActive(IStatefulBehaviorNode<A> node);
-	}
+	bool MarkActive(IStatefulBehaviorNode<A> node);
 }

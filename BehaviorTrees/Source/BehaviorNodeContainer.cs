@@ -1,21 +1,17 @@
-using System.Collections.Generic;
-using System.Linq;
+namespace BehaviorTrees;
 
-namespace BehaviorTrees
+public abstract class BehaviorNodeContainer<A> : IBehaviorNodeBranch<A>
 {
-	public abstract class BehaviorNodeContainer<A> : IBehaviorNodeBranch<A>
+	public BehaviorNodeContainer(IEnumerable<IBehaviorNode<A>> children)
 	{
-		public BehaviorNodeContainer(IEnumerable<IBehaviorNode<A>> children)
-		{
-			Children = children.ToArray();
-		}
-
-		public BehaviorNodeContainer(IBehaviorNode<A>[] children)
-		{
-			Children = children;
-		}
-
-		public abstract Result Run(Tick<A> tick);
-		public IBehaviorNode<A>[] Children { get; protected set; }
+		Children = children.ToArray();
 	}
+
+	public BehaviorNodeContainer(IBehaviorNode<A>[] children)
+	{
+		Children = children;
+	}
+
+	public abstract Result Run(Tick<A> tick);
+	public IBehaviorNode<A>[] Children { get; protected set; }
 }
