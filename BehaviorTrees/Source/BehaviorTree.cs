@@ -37,6 +37,11 @@ public class BehaviorTree<A>
 	{
 		var result = new object?[StatefulNodes.Count];
 
+		for (int i = 0; i < result.Length; i++)
+		{
+			result[i] = StatefulNodes[i].GetInitialState(tick);
+		}
+
 		return result;
 	}
 
