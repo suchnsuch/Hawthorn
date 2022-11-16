@@ -7,11 +7,11 @@ namespace BehaviorTrees;
 
 public class ActorDelegateBehavior<A> : IBehaviorNode<A>, IBehaviorNodeBuilder<A>
 {
-	public delegate Result ActorDelegate(A actor);
+	public delegate Result Delegate(A actor);
 	
-	ActorDelegate Handler;
+	Delegate Handler;
 
-	public ActorDelegateBehavior(ActorDelegate handler)
+	public ActorDelegateBehavior(Delegate handler)
 	{
 		Handler = handler;
 	}
@@ -29,11 +29,11 @@ public class ActorDelegateBehavior<A> : IBehaviorNode<A>, IBehaviorNodeBuilder<A
 
 public class ActorDeltaDelegateBehavior<A> : IBehaviorNode<A>, IBehaviorNodeBuilder<A>
 {
-	public delegate Result ActorDeltaDelegate(A actor, float delta);
+	public delegate Result Delegate(A actor, float delta);
 	
-	ActorDeltaDelegate Handler;
+	Delegate Handler;
 
-	public ActorDeltaDelegateBehavior(ActorDeltaDelegate handler)
+	public ActorDeltaDelegateBehavior(Delegate handler)
 	{
 		Handler = handler;
 	}
@@ -49,15 +49,43 @@ public class ActorDeltaDelegateBehavior<A> : IBehaviorNode<A>, IBehaviorNodeBuil
 	}
 }
 
+public class ActorSimpleDelegateBehavior<A> : IBehaviorNode<A>, IBehaviorNodeBuilder<A>
+{
+	public delegate void Delegate(A actor);
+	
+	Delegate Handler;
+
+	public ActorSimpleDelegateBehavior(Delegate handler)
+	{
+		Handler = handler;
+	}
+
+	public Result Run(Tick<A> tick)
+	{
+		Handler(tick.Actor);
+		return Result.Succeeded;
+	}
+
+	IBehaviorNode<A> IBehaviorNodeBuilder<A>.Build()
+	{
+		return this;
+	}
+}
+
 public static class DelegateBehaviorBuilders
 {
-	public static IBehaviorNodeBuilder<A> Lambda<A>(this BehaviorBuilder<A> builder, ActorDelegateBehavior<A>.ActorDelegate lambda)
+	public static IBehaviorNodeBuilder<A> Lambda<A>(this BehaviorBuilder<A> builder, ActorDelegateBehavior<A>.Delegate lambda)
 	{
 		return new ActorDelegateBehavior<A>(lambda);
 	}
 
-	public static IBehaviorNodeBuilder<A> Lambda<A>(this BehaviorBuilder<A> builder, ActorDeltaDelegateBehavior<A>.ActorDeltaDelegate lambda)
+	public static IBehaviorNodeBuilder<A> Lambda<A>(this BehaviorBuilder<A> builder, ActorDeltaDelegateBehavior<A>.Delegate lambda)
 	{
 		return new ActorDeltaDelegateBehavior<A>(lambda);
+	}
+
+	public static IBehaviorNodeBuilder<A> Lambda<A>(this BehaviorBuilder<A> builder, ActorSimpleDelegateBehavior<A>.Delegate lambda)
+	{
+		return new ActorSimpleDelegateBehavior<A>(lambda);
 	}
 }
