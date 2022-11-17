@@ -72,6 +72,28 @@ public class ActorSimpleDelegateBehavior<A> : IBehaviorNode<A>, IBehaviorNodeBui
 	}
 }
 
+public class ActorBoolDelegateBehavior<A> : IBehaviorNode<A>, IBehaviorNodeBuilder<A>
+{
+	public delegate bool Delegate(A actor);
+	
+	Delegate Handler;
+
+	public ActorBoolDelegateBehavior(Delegate handler)
+	{
+		Handler = handler;
+	}
+
+	public Result Run(Tick<A> tick)
+	{
+		return Handler(tick.Actor) ? Result.Succeeded : Result.Failed;
+	}
+
+	IBehaviorNode<A> IBehaviorNodeBuilder<A>.Build()
+	{
+		return this;
+	}
+}
+
 public static class DelegateBehaviorBuilders
 {
 	public static IBehaviorNodeBuilder<A> Lambda<A>(this BehaviorBuilder<A> builder, ActorDelegateBehavior<A>.Delegate lambda)
@@ -87,5 +109,10 @@ public static class DelegateBehaviorBuilders
 	public static IBehaviorNodeBuilder<A> Lambda<A>(this BehaviorBuilder<A> builder, ActorSimpleDelegateBehavior<A>.Delegate lambda)
 	{
 		return new ActorSimpleDelegateBehavior<A>(lambda);
+	}
+
+	public static IBehaviorNodeBuilder<A> Lambda<A>(this BehaviorBuilder<A> builder, ActorBoolDelegateBehavior<A>.Delegate lambda)
+	{
+		return new ActorBoolDelegateBehavior<A>(lambda);
 	}
 }

@@ -24,11 +24,11 @@ public class Sequences
 	}
 
 	[Fact]
-	public void AsyncSequencesCanOccurInImmediateOrder()
+	public void StatefulSequencesCanOccurInImmediateOrder()
 	{
 		var _ = new BehaviorBuilder<List<string>>();
 
-		var ticker = _.AsyncSequence(
+		var ticker = _.StatefulSequence(
 			_.Lambda(a => a.Add("1")),
 			_.Lambda(a => a.Add("2")),
 			_.Lambda(a => a.Add("3"))
@@ -60,11 +60,11 @@ public class Sequences
 	}
 
 	[Fact]
-	public void AsyncSequencesContinueOnBusy()
+	public void StatefulSequencesContinueOnBusy()
 	{
 		var _  = new BehaviorBuilder<List<string>>();
 
-		var ticker = _.AsyncSequence(
+		var ticker = _.StatefulSequence(
 			_.Lambda(a => a.Add("1")),
 			_.Lambda(a => a.Add("2")),
 			_.Lambda(a => {
@@ -81,11 +81,11 @@ public class Sequences
 	}
 
 	[Fact]
-	public void AsyncSequencesRestartOnFailure()
+	public void StatefulSequencesRestartOnFailure()
 	{
 		var _  = new BehaviorBuilder<List<string>>();
 
-		var ticker = _.AsyncSequence(
+		var ticker = _.StatefulSequence(
 			_.Lambda(a => a.Add("1")),
 			_.Lambda(a => a.Add("2")),
 			_.Lambda(a => {

@@ -24,9 +24,9 @@ public class BehaviorSequence<A> : BehaviorNodeContainer<A>
 	}
 }
 
-public class AsyncBehaviorSequence<A> : BehaviorNodeContainer<A>, IStatefulBehaviorNode<A>
+public class StatefulBehaviorSequence<A> : BehaviorNodeContainer<A>, IStatefulBehaviorNode<A>
 {
-	public AsyncBehaviorSequence(IBehaviorNode<A>[] children)
+	public StatefulBehaviorSequence(IBehaviorNode<A>[] children)
 		: base(children)
 	{
 	}

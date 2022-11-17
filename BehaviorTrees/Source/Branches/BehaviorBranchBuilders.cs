@@ -7,7 +7,7 @@ public static class BehaviorBranchBuilders
 		return new BehaviorBranchBuilder<A>(BehaviorBranchBuilder<A>.BranchType.Sequence, children);
 	}
 
-	public static BehaviorBranchBuilder<A> AsyncSequence<A>(this BehaviorBuilder<A> builder, params IBehaviorNodeBuilder<A>[] children)
+	public static BehaviorBranchBuilder<A> StatefulSequence<A>(this BehaviorBuilder<A> builder, params IBehaviorNodeBuilder<A>[] children)
 	{
 		return new BehaviorBranchBuilder<A>(BehaviorBranchBuilder<A>.BranchType.AsyncSequence, children);
 	}
@@ -17,7 +17,7 @@ public static class BehaviorBranchBuilders
 		return new BehaviorBranchBuilder<A>(BehaviorBranchBuilder<A>.BranchType.Selector, children);
 	}
 
-	public static BehaviorBranchBuilder<A> AsyncSelector<A>(this BehaviorBuilder<A> builder, params IBehaviorNodeBuilder<A>[] children)
+	public static BehaviorBranchBuilder<A> StatefulSelector<A>(this BehaviorBuilder<A> builder, params IBehaviorNodeBuilder<A>[] children)
 	{
 		return new BehaviorBranchBuilder<A>(BehaviorBranchBuilder<A>.BranchType.AsyncSelector, children);
 	}
@@ -56,9 +56,9 @@ public class BehaviorBranchBuilder<A> : IBehaviorNodeBuilder<A>
 		return Type switch
 		{
 			BranchType.Sequence => new BehaviorSequence<A>(childNodes),
-			BranchType.AsyncSequence => new AsyncBehaviorSequence<A>(childNodes),
+			BranchType.AsyncSequence => new StatefulBehaviorSequence<A>(childNodes),
 			BranchType.Selector => new BehaviorSelector<A>(childNodes),
-			BranchType.AsyncSelector => new AsyncBehaviorSelector<A>(childNodes),
+			BranchType.AsyncSelector => new StatefulBehaviorSelector<A>(childNodes),
 			BranchType.Parallel => new BehaviorParallel<A>(childNodes),
 			_ => throw new Exception("Unknown type: " + Type)
 		};
