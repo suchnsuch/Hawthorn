@@ -1,4 +1,4 @@
-namespace BehaviorTrees;
+namespace Hawthorn;
 
 public abstract class BehaviorNodeContainer<A> : IBehaviorNodeBranch<A>
 {

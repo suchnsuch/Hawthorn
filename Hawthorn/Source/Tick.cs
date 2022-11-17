@@ -1,4 +1,4 @@
-namespace BehaviorTrees;
+namespace Hawthorn;
 
 public interface Tick<A>
 {

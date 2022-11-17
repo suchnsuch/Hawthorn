@@ -1,4 +1,4 @@
-namespace BehaviorTrees;
+namespace Hawthorn;
 
 /// <summary>
 /// This serves as a launch point for extension methods to build off from

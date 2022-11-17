@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BehaviorTrees\BehaviorTrees.csproj" />
+    <ProjectReference Include="..\Hawthorn\Hawthorn.csproj" />
   </ItemGroup>
 
 </Project>

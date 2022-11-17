@@ -1,7 +1,7 @@
 using Xunit;
-using BehaviorTrees;
+using Hawthorn;
 
-namespace BehaviorTreesTest;
+namespace HawthornTest;
 
 public class Parallel
 {

@@ -1,8 +1,8 @@
-namespace BehaviorTrees;
+namespace Hawthorn;
 
-public class BehaviorSelector<A> : BehaviorNodeContainer<A>
+public class BehaviorSequence<A> : BehaviorNodeContainer<A>
 {
-	public BehaviorSelector(IBehaviorNode<A>[] children)
+	public BehaviorSequence(IBehaviorNode<A>[] children)
 		: base(children)
 	{
 	}
@@ -14,19 +14,19 @@ public class BehaviorSelector<A> : BehaviorNodeContainer<A>
 			var result = child.Run(tick);
 			switch (result)
 			{
-				case Result.Succeeded:
 				case Result.Busy:
+				case Result.Failed:
 					return result;
 			}
 		}
 
-		return Result.Failed;
+		return Result.Succeeded;
 	}
 }
 
-public class StatefulBehaviorSelector<A> : BehaviorNodeContainer<A>, IStatefulBehaviorNode<A>
+public class StatefulBehaviorSequence<A> : BehaviorNodeContainer<A>, IStatefulBehaviorNode<A>
 {
-	public StatefulBehaviorSelector(IBehaviorNode<A>[] children)
+	public StatefulBehaviorSequence(IBehaviorNode<A>[] children)
 		: base(children)
 	{
 	}
@@ -47,15 +47,15 @@ public class StatefulBehaviorSelector<A> : BehaviorNodeContainer<A>, IStatefulBe
 					tick.SetState(this, index);
 					tick.MarkActive(this);
 					return result;
-				case Result.Succeeded:
-					// child succeeded, will restart on next entry
+				case Result.Failed:
+					// child failed, will restart on next entry
 					tick.SetState(this, 0);
 					return result;
 			}
 		}
-		// Failed, will restart on next entry
+		// Succeeded, will restart on next entry
 		tick.SetState(this, 0);
-		return Result.Failed;
+		return Result.Succeeded;
 	}
 
 	public object GetInitialState(Tick<A> tick)

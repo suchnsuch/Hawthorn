@@ -1,4 +1,4 @@
-namespace BehaviorTrees;
+namespace Hawthorn;
 
 public class BehaviorTree<A>
 {

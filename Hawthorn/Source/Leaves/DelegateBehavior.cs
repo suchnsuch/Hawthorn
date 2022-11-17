@@ -1,4 +1,4 @@
-namespace BehaviorTrees;
+namespace Hawthorn;
 
 /*
  * These allow for quickly adding simple code-based behavior when you just need to operate on an actor.

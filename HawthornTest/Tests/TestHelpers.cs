@@ -1,6 +1,6 @@
-using BehaviorTrees;
+using Hawthorn;
 
-namespace BehaviorTreesTest;
+namespace HawthornTest;
 
 public static class TestHelpers
 {

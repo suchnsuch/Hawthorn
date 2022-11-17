@@ -1,4 +1,4 @@
-namespace BehaviorTrees;
+namespace Hawthorn;
 
 /// <summary>
 /// The per-instance state for running a `BehaviorTree` on an Actor.
