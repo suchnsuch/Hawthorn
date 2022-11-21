@@ -2,8 +2,8 @@ namespace Hawthorn;
 
 public class BehaviorSequence<A> : BehaviorNodeContainer<A>
 {
-	public BehaviorSequence(IBehaviorNode<A>[] children)
-		: base(children)
+	public BehaviorSequence(string name, IBehaviorNode<A>[] children)
+		: base(name, children)
 	{
 	}
 
@@ -26,8 +26,8 @@ public class BehaviorSequence<A> : BehaviorNodeContainer<A>
 
 public class StatefulBehaviorSequence<A> : BehaviorNodeContainer<A>, IStatefulBehaviorNode<A>
 {
-	public StatefulBehaviorSequence(IBehaviorNode<A>[] children)
-		: base(children)
+	public StatefulBehaviorSequence(string name, IBehaviorNode<A>[] children)
+		: base(name, children)
 	{
 	}
 

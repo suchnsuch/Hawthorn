@@ -2,8 +2,8 @@ namespace Hawthorn;
 
 public class BehaviorSelector<A> : BehaviorNodeContainer<A>
 {
-	public BehaviorSelector(IBehaviorNode<A>[] children)
-		: base(children)
+	public BehaviorSelector(string name, IBehaviorNode<A>[] children)
+		: base(name, children)
 	{
 	}
 
@@ -26,8 +26,8 @@ public class BehaviorSelector<A> : BehaviorNodeContainer<A>
 
 public class StatefulBehaviorSelector<A> : BehaviorNodeContainer<A>, IStatefulBehaviorNode<A>
 {
-	public StatefulBehaviorSelector(IBehaviorNode<A>[] children)
-		: base(children)
+	public StatefulBehaviorSelector(string name, IBehaviorNode<A>[] children)
+		: base(name, children)
 	{
 	}
 

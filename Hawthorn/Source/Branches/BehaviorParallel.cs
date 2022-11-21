@@ -2,8 +2,8 @@ namespace Hawthorn;
 
 public class BehaviorParallel<A> : BehaviorNodeContainer<A>
 {
-	public BehaviorParallel(IBehaviorNode<A>[] children)
-		: base(children)
+	public BehaviorParallel(string name, IBehaviorNode<A>[] children)
+		: base(name, children)
 	{
 	}
 
