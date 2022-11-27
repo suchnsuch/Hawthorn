@@ -18,6 +18,11 @@ public static class ResultExtensions
 	{
 		return result < other ? result : other;
 	}
+
+	public static Result ToResult(this bool b)
+	{
+		return b ? Result.Succeeded : Result.Failed;
+	}
 }
 
 public interface IBehaviorNode<A>
