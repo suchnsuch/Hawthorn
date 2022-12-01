@@ -19,9 +19,14 @@ public static class ResultExtensions
 		return result < other ? result : other;
 	}
 
-	public static Result ToResult(this bool b)
+	public static Result ToSucceededOrFailed(this bool b)
 	{
 		return b ? Result.Succeeded : Result.Failed;
+	}
+
+	public static Result ToBusyOrFailed(this bool b)
+	{
+		return b ? Result.Busy : Result.Failed;
 	}
 }
 

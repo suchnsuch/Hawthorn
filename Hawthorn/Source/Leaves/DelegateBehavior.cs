@@ -9,7 +9,7 @@ public class ActorDelegateBehavior<A> : IBehaviorNode<A>, IBehaviorNodeBuilder<A
 {
 	public delegate Result Delegate(A actor);
 	
-	Delegate Handler;
+	readonly Delegate Handler;
 
 	public ActorDelegateBehavior(Delegate handler)
 	{
@@ -31,7 +31,7 @@ public class ActorDeltaDelegateBehavior<A> : IBehaviorNode<A>, IBehaviorNodeBuil
 {
 	public delegate Result Delegate(A actor, float delta);
 	
-	Delegate Handler;
+	readonly Delegate Handler;
 
 	public ActorDeltaDelegateBehavior(Delegate handler)
 	{
@@ -53,7 +53,7 @@ public class ActorSimpleDelegateBehavior<A> : IBehaviorNode<A>, IBehaviorNodeBui
 {
 	public delegate void Delegate(A actor);
 	
-	Delegate Handler;
+	readonly Delegate Handler;
 
 	public ActorSimpleDelegateBehavior(Delegate handler)
 	{
@@ -76,7 +76,7 @@ public class ActorBoolDelegateBehavior<A> : IBehaviorNode<A>, IBehaviorNodeBuild
 {
 	public delegate bool Delegate(A actor);
 	
-	Delegate Handler;
+	readonly Delegate Handler;
 
 	public ActorBoolDelegateBehavior(Delegate handler)
 	{
@@ -86,6 +86,28 @@ public class ActorBoolDelegateBehavior<A> : IBehaviorNode<A>, IBehaviorNodeBuild
 	public Result Run(Tick<A> tick)
 	{
 		return Handler(tick.Actor) ? Result.Succeeded : Result.Failed;
+	}
+
+	IBehaviorNode<A> IBehaviorNodeBuilder<A>.Build()
+	{
+		return this;
+	}
+}
+
+public class TickDelegateBehavior<A> : IBehaviorNode<A>, IBehaviorNodeBuilder<A>
+{
+	public delegate Result Delegate(Tick<A> tick);
+	
+	readonly Delegate Handler;
+
+	public TickDelegateBehavior(Delegate handler)
+	{
+		Handler = handler;
+	}
+
+	public Result Run(Tick<A> tick)
+	{
+		return Handler(tick);
 	}
 
 	IBehaviorNode<A> IBehaviorNodeBuilder<A>.Build()
@@ -114,5 +136,10 @@ public static class DelegateBehaviorBuilders
 	public static IBehaviorNodeBuilder<A> Lambda<A>(this BehaviorBuilder<A> builder, ActorBoolDelegateBehavior<A>.Delegate lambda)
 	{
 		return new ActorBoolDelegateBehavior<A>(lambda);
+	}
+
+	public static IBehaviorNodeBuilder<A> LambdaTick<A>(this BehaviorBuilder<A> builder, TickDelegateBehavior<A>.Delegate lambda)
+	{
+		return new TickDelegateBehavior<A>(lambda);
 	}
 }

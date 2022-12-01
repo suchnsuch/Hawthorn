@@ -6,7 +6,7 @@ namespace HawthornTest;
 public class Selectors
 {
 	[Fact]
-	public void SelectorsStopOnFirstNonFailure()
+	public void SelectorsStopOnFirstSuccess()
 	{
 		var _ = new BehaviorBuilder<object>();
 
@@ -30,7 +30,31 @@ public class Selectors
 	}
 
 	[Fact]
-	public void StatefulSelectorsStopOnFirstNonFailure()
+	public void SelectorsStopOnFirstBusy()
+	{
+		var _ = new BehaviorBuilder<object>();
+
+		var reached = 0;
+		var target = 1;
+
+		var ticker = _.Selector(
+			_.Lambda(a => (target == (reached = 1)).ToBusyOrFailed()),
+			_.Lambda(a => (target == (reached = 2)).ToBusyOrFailed()),
+			_.Lambda(a => (target == (reached = 3)).ToBusyOrFailed())
+		).ToTree().CreateTestTicker();
+
+		Assert.Equal(Result.Busy, ticker.Update(1));
+		Assert.Equal(1, reached);
+
+		reached = 0;
+		target = 3;
+
+		Assert.Equal(Result.Busy, ticker.Update(1));
+		Assert.Equal(3, reached);
+	}
+
+	[Fact]
+	public void StatefulSelectorsStopOnFirstSuccess()
 	{
 		var _ = new BehaviorBuilder<object>();
 

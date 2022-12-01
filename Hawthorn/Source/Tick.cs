@@ -6,10 +6,11 @@ public interface Tick<A>
 	Blackboard State { get; }
 
 	float Delta { get; }
+	double Time { get; }
 
-	T? GetState<T>(IStatefulBehaviorNode<A> node);
+	T GetState<T>(IStatefulBehaviorNode<A> node);
 	
-	void SetState(IStatefulBehaviorNode<A> node, object? value);
+	void SetState(IStatefulBehaviorNode<A> node, object value);
 
 	bool MarkActive(IStatefulBehaviorNode<A> node);
 }

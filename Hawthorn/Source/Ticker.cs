@@ -10,11 +10,12 @@ public class Ticker<A> : Tick<A>
 	public Blackboard State { get; protected set; }
 	public BehaviorTree<A> Tree { get; protected set; }
 
-	object?[] NodeStates;
+	object[] NodeStates;
 	bool[] LastNodeActivity;
 	bool[] ThisNodeActivity;
 
 	float delta;
+	double time;
 
 	public Ticker(A actor, Blackboard state, BehaviorTree<A> tree)
 	{
@@ -31,6 +32,7 @@ public class Ticker<A> : Tick<A>
 	{
 		// Prepare
 		this.delta = delta;
+		this.time += delta;
 		ClearActivityArray(ThisNodeActivity);
 
 		// Execute
@@ -53,14 +55,14 @@ public class Ticker<A> : Tick<A>
 		return result;
 	}
 
-	public T? GetState<T>(IStatefulBehaviorNode<A> node)
+	public T GetState<T>(IStatefulBehaviorNode<A> node)
 	{
 		var value = NodeStates[node.StateID];
 		if (value == null) return default(T);
 		return (T)value;
 	}
 	
-	public void SetState(IStatefulBehaviorNode<A> node, object? value)
+	public void SetState(IStatefulBehaviorNode<A> node, object value)
 	{
 		NodeStates[node.StateID] = value;
 	}
@@ -75,6 +77,7 @@ public class Ticker<A> : Tick<A>
 
 	// Keep the fact that this is actually a Tick a little obfuscated
 	float Tick<A>.Delta => delta;
+	double Tick<A>.Time => time;
 
 	bool Tick<A>.MarkActive(IStatefulBehaviorNode<A> node)
 	{

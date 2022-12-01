@@ -28,7 +28,7 @@ public class DistanceTo3DIsFloat<A> : IBehaviorNode<A> where A : Node3D
 
 		float squareDistance = actorPosition.DistanceSquaredTo(targetPosition);
 
-		return Comparison.Compare(squareDistance, ComparisonValue * ComparisonValue).ToResult();
+		return Comparison.Compare(squareDistance, ComparisonValue * ComparisonValue).ToSucceededOrFailed();
 	}
 }
 
@@ -60,7 +60,7 @@ public class DistanceTo3DIsKey<A> : IBehaviorNode<A> where A : Node3D
 
 		float targetValue = tick.State.Get<float>(ComparisonValueKey);
 
-		return Comparison.Compare(squareDistance, targetValue * targetValue).ToResult();
+		return Comparison.Compare(squareDistance, targetValue * targetValue).ToSucceededOrFailed();
 	}
 }
 
@@ -78,7 +78,7 @@ public class DistanceTo3DBuilder<A> : IBehaviorNodeBuilder<A> where A : Node3D
 	string ValueKey;
 	Comparison Comparison;
 	float ComparisonValue;
-	string? ComparisonValueKey;
+	string ComparisonValueKey;
 
 	public DistanceTo3DBuilder(string targetKey)
 	{

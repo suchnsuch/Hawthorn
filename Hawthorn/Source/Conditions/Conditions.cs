@@ -26,4 +26,17 @@ public static class Conditions
 			_ => throw new ArgumentException("Unknown comparison: " + comparison)
 		};
 	}
+
+	public static bool Compare(this Comparison comparison, double a, double b)
+	{
+		return comparison switch {
+			Comparison.Equal => Math.Abs(a - b) < SmallDifference,
+			Comparison.NotEqual => Math.Abs(a - b) > SmallDifference,
+			Comparison.LessThan => a < b,
+			Comparison.LessThanOrEqual => a <= b,
+			Comparison.GreaterThan => a > b,
+			Comparison.GreaterThanOrEqual => a >= b,
+			_ => throw new ArgumentException("Unknown comparison: " + comparison)
+		};
+	}
 }

@@ -33,9 +33,9 @@ public class BehaviorTree<A>
 		return StatefulNodes[nodeID];
 	}
 
-	public object?[] BuildNodeStates(Tick<A> tick)
+	public object[] BuildNodeStates(Tick<A> tick)
 	{
-		var result = new object?[StatefulNodes.Count];
+		var result = new object[StatefulNodes.Count];
 
 		for (int i = 0; i < result.Length; i++)
 		{
