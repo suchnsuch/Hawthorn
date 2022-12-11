@@ -41,7 +41,7 @@ public class DeleteValueBuilder<A> : IBehaviorNodeBuilder<A>
 
 public static class DeleteValueExtensions
 {
-	public static DeleteValueBuilder<A> Delete<A>(string key)
+	public static DeleteValueBuilder<A> Delete<A>(this BehaviorBuilder<A> b, string key)
 	{
 		return new DeleteValueBuilder<A>(key);
 	}
