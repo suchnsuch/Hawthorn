@@ -17,6 +17,10 @@ public class Ticker<A> : Tick<A>
 	float delta;
 	double time;
 
+#if DEBUG
+	List<string> processPath = new List<string>();
+#endif
+
 	public Ticker(A actor, Blackboard state, BehaviorTree<A> tree)
 	{
 		Actor = actor;
@@ -34,6 +38,10 @@ public class Ticker<A> : Tick<A>
 		this.delta = delta;
 		this.time += delta;
 		ClearActivityArray(ThisNodeActivity);
+
+#if DEBUG
+		processPath.Clear();
+#endif
 
 		// Execute
 		var result = Tree.RootNode.Run(this);
@@ -83,4 +91,24 @@ public class Ticker<A> : Tick<A>
 	{
 		return ThisNodeActivity[node.StateID] = true;
 	}
+
+#if DEBUG
+	public void MarkDebugPosition(int depth, string name)
+	{
+		while (processPath.Count <= depth)
+		{
+			processPath.Add("");
+		}
+		processPath[depth] = name;
+		while (processPath.Count > depth + 1)
+		{
+			processPath.RemoveAt(processPath.Count);
+		}
+	}
+
+	public IReadOnlyList<string> GetLastDebugPath()
+	{
+		return processPath;
+	}
+#endif
 }

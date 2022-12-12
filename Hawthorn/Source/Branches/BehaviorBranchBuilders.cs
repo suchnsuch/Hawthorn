@@ -71,7 +71,6 @@ public class BehaviorBranchBuilder<A> : IBehaviorNodeBuilder<A>
 
 	public BehaviorBranchBuilder(BranchType type, IBehaviorNodeBuilder<A>[] children)
 	{
-		Name = type.ToString();
 		Type = type;
 		Children = children;
 	}

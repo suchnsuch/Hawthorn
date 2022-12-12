@@ -13,4 +13,8 @@ public interface Tick<A>
 	void SetState(IStatefulBehaviorNode<A> node, object value);
 
 	bool MarkActive(IStatefulBehaviorNode<A> node);
+
+#if DEBUG
+	void MarkDebugPosition(int depth, string name);
+#endif
 }

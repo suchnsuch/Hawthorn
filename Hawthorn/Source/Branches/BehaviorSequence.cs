@@ -9,6 +9,9 @@ public class BehaviorSequence<A> : BehaviorNodeContainer<A>
 
 	public override Result Run(Tick<A> tick)
 	{
+#if DEBUG
+		MarkDebugPosition(tick);
+#endif
 		foreach (var child in Children)
 		{
 			var result = child.Run(tick);
@@ -35,6 +38,9 @@ public class StatefulBehaviorSequence<A> : BehaviorNodeContainer<A>, IStatefulBe
 
 	public override Result Run(Tick<A> tick)
 	{
+#if DEBUG
+		MarkDebugPosition(tick);
+#endif
 		int startingIndex = tick.GetState<int>(this);
 
 		for (int index = startingIndex; index < Children.Length; index++)

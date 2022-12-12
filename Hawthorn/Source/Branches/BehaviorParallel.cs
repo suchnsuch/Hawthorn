@@ -9,6 +9,10 @@ public class BehaviorParallel<A> : BehaviorNodeContainer<A>
 
 	public override Result Run(Tick<A> tick)
 	{
+#if DEBUG
+		MarkDebugPosition(tick);
+#endif
+
 		var worstResult = Result.Succeeded;
 		foreach (var child in Children)
 		{

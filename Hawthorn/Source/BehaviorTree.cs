@@ -9,6 +9,13 @@ public class BehaviorTree<A>
 	{
 		RootNode = rootNode;
 		GatherStatefulNodes(rootNode);
+
+#if DEBUG
+		if (rootNode is BehaviorNodeContainer<A> container)
+		{
+			container.FlowDepth(0);
+		}
+#endif
 	}
 
 	void GatherStatefulNodes(IBehaviorNode<A> node)
