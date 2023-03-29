@@ -1,6 +1,6 @@
 namespace Hawthorn;
 
-public abstract class BehaviorNodeContainer<A> : IBehaviorNodeBranch<A>
+public abstract class BehaviorNodeContainer<A> : IBehaviorNodeContainer<A>
 {
 #if DEBUG
 	/// <summary>
@@ -23,6 +23,8 @@ public abstract class BehaviorNodeContainer<A> : IBehaviorNodeBranch<A>
 		Name = name;
 		Children = children;
 	}
+
+	public IEnumerable<IBehaviorNode<A>> ChildNodes => Children;
 
 	public abstract Result Run(Tick<A> tick);
 

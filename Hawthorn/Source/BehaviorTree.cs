@@ -2,10 +2,10 @@ namespace Hawthorn;
 
 public class BehaviorTree<A>
 {
-	public IBehaviorNodeBranch<A> RootNode { get; protected set; }
+	public IBehaviorNodeContainer<A> RootNode { get; protected set; }
 	List<IStatefulBehaviorNode<A>> StatefulNodes = new List<IStatefulBehaviorNode<A>>();
 
-	public BehaviorTree(IBehaviorNodeBranch<A> rootNode)
+	public BehaviorTree(IBehaviorNodeContainer<A> rootNode)
 	{
 		RootNode = rootNode;
 		GatherStatefulNodes(rootNode);
@@ -26,9 +26,9 @@ public class BehaviorTree<A>
 			StatefulNodes.Add(statefulNode);
 		}
 
-		if (node is IBehaviorNodeBranch<A> branchNode)
+		if (node is IBehaviorNodeContainer<A> branchNode)
 		{
-			foreach (var child in branchNode.Children)
+			foreach (var child in branchNode.ChildNodes)
 			{
 				GatherStatefulNodes(child);
 			}

@@ -59,7 +59,7 @@ public static class BehaviorBuilderExtensions
 	public static BehaviorTree<A> ToTree<A>(this IBehaviorNodeBuilder<A> nodeBuilder)
 	{
 		var node = nodeBuilder.Build();
-		if (node is IBehaviorNodeBranch<A> branch)
+		if (node is IBehaviorNodeContainer<A> branch)
 		{
 			return new BehaviorTree<A>(branch);
 		}

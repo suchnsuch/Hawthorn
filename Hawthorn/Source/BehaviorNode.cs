@@ -30,14 +30,24 @@ public static class ResultExtensions
 	}
 }
 
+/// <summary>
+/// A node within a <see cref="BehaviorTree"/>
+/// </summary>
+/// <typeparam name="A">
+/// The firm type of the actor using the behavior.
+/// Ensures that client code has access to what it needs without casting.
+/// </typeparam>
 public interface IBehaviorNode<A>
 {
 	Result Run(Tick<A> tick);
 }
 
-public interface IBehaviorNodeBranch<A> : IBehaviorNode<A>
+/// <summary>
+/// A node that contains one or more children.
+/// </summary>
+public interface IBehaviorNodeContainer<A> : IBehaviorNode<A>
 {
-	IBehaviorNode<A>[] Children { get; }
+	IEnumerable<IBehaviorNode<A>> ChildNodes { get; }
 }
 
 public interface IStatefulBehaviorNode<A> : IBehaviorNode<A>
