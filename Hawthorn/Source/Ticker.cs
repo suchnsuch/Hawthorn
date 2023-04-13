@@ -102,7 +102,7 @@ public class Ticker<A> : Tick<A>
 		processPath[depth] = name;
 		while (processPath.Count > depth + 1)
 		{
-			processPath.RemoveAt(processPath.Count);
+			processPath.RemoveAt(processPath.Count - 1);
 		}
 	}
 
