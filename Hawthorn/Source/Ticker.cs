@@ -17,6 +17,8 @@ public class Ticker<A> : Tick<A>
 	float delta;
 	double time;
 
+	Result lastResult = Result.Failed;
+
 #if DEBUG
 	List<string> processPath = new List<string>();
 #endif
@@ -60,8 +62,12 @@ public class Ticker<A> : Tick<A>
 		LastNodeActivity = ThisNodeActivity;
 		ThisNodeActivity = next;
 
+		lastResult = result;
+
 		return result;
 	}
+
+	public Result LastResult => lastResult;
 
 	public T GetState<T>(IStatefulBehaviorNode<A> node)
 	{
