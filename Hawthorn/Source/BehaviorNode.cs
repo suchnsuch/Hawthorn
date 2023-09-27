@@ -48,11 +48,23 @@ public interface IBehaviorNode<A>
 public interface IBehaviorNodeContainer<A> : IBehaviorNode<A>
 {
 	IEnumerable<IBehaviorNode<A>> ChildNodes { get; }
+
+#if DEBUG
+	void FlowDepth(int depth);
+#endif
 }
 
+/// <summary>
+/// A node that tracks some state across runs.
+/// </summary>
 public interface IStatefulBehaviorNode<A> : IBehaviorNode<A>
 {
 	int StateID { get; set; }
 	object GetInitialState(Tick<A> tick);
+
+	/// <summary>
+	/// Called immediately after the node no longer reports itself as active.
+	/// The node is responsible for calling Tick.MarkActive() for itself.
+	/// </summary>
 	void Sleep(Tick<A> tick);
 }

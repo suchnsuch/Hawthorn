@@ -35,7 +35,7 @@ public abstract class BehaviorNodeContainer<A> : IBehaviorNodeContainer<A>
 		int childDepth = Depth + 1;
 		foreach (var child in Children)
 		{
-			if (child is BehaviorNodeContainer<A> container)
+			if (child is IBehaviorNodeContainer<A> container)
 			{
 				container.FlowDepth(childDepth);
 			}

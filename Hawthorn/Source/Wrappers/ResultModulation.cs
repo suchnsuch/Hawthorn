@@ -1,34 +1,28 @@
 namespace Hawthorn;
 
-public class ResultModulator<A> : IBehaviorNodeContainer<A>
+public class ResultModulator<A> : BehaviorNodeWrapper<A>
 {
 	public Result ResultOnFail { get; init; } = Result.Failed;
 	public Result ResultOnSuccess { get; init; } = Result.Succeeded;
 	public Result ResultOnBusy { get; init; } = Result.Busy;
 
-	readonly IBehaviorNode<A> Child;
-
 	public ResultModulator(IBehaviorNode<A> child)
+		: base(child)
 	{
-		Child = child;
 	}
 
-	public Result Run(Tick<A> tick)
+	public override Result Run(Tick<A> tick)
 	{
+#if DEBUG
+		MarkDebugPosition(tick);
+#endif
+
 		return Child.Run(tick) switch {
 			Result.Failed => ResultOnFail,
 			Result.Succeeded => ResultOnSuccess,
 			Result.Busy => ResultOnBusy,
 			_ => Result.Failed // Won't happen
 		};
-	}
-
-	public IEnumerable<IBehaviorNode<A>> ChildNodes
-	{
-		get
-		{
-			yield return Child;
-		}
 	}
 }
 
