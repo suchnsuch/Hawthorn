@@ -63,4 +63,9 @@ public class Blackboard
 	{
 		return Values.ContainsKey(key);
 	}
+
+	public void Clear()
+	{
+		Values.Clear();
+	}
 }
