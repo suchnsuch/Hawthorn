@@ -116,5 +116,22 @@ public class Ticker<A> : Tick<A>
 	{
 		return processPath;
 	}
+
+	public event DebugLogEvent OnDebugLog;
+	public void DebugLog(DebugLogLevel level, string message, int depth=0)
+	{
+		if (depth > 0)
+		{
+			string depthString = "";
+			while (depth > 0)
+			{
+				depth--;
+				depthString += "  ";
+			}
+			message = depthString + message;
+		}
+
+		OnDebugLog?.Invoke(level, message);
+	}
 #endif
 }

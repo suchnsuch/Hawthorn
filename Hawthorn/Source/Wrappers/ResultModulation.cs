@@ -94,4 +94,12 @@ public static class ResultModulatorExtensions
 			ResultOnSuccess = Result.Failed
 		};
 	}
+
+	public static ResultModulatorBuilder<A> BusyOnSuccess<A>(this IBehaviorNodeBuilder<A> child)
+	{
+		return new ResultModulatorBuilder<A>(child)
+		{
+			ResultOnSuccess = Result.Busy
+		};
+	}
 }

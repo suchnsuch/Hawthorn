@@ -15,6 +15,11 @@ public class BehaviorSequence<A> : BehaviorNodeContainer<A>
 		foreach (var child in Children)
 		{
 			var result = child.Run(tick);
+
+#if DEBUG
+			LogChildResult(tick, child, result);
+#endif
+
 			switch (result)
 			{
 				case Result.Busy:
@@ -25,6 +30,11 @@ public class BehaviorSequence<A> : BehaviorNodeContainer<A>
 
 		return Result.Succeeded;
 	}
+
+    public override string ToString()
+    {
+        return $"Sequence({Name})";
+    }
 }
 
 public class StatefulBehaviorSequence<A> : BehaviorNodeContainer<A>, IStatefulBehaviorNode<A>
@@ -46,6 +56,11 @@ public class StatefulBehaviorSequence<A> : BehaviorNodeContainer<A>, IStatefulBe
 		for (int index = startingIndex; index < Children.Length; index++)
 		{
 			var result = Children[index].Run(tick);
+
+#if DEBUG
+			LogChildResult(tick, Children[index], result);
+#endif
+
 			switch (result)
 			{
 				case Result.Busy:
@@ -73,4 +88,9 @@ public class StatefulBehaviorSequence<A> : BehaviorNodeContainer<A>, IStatefulBe
 	{
 		tick.SetState(this, 0);
 	}
+
+	public override string ToString()
+    {
+        return $"StatefulSequence({Name})";
+    }
 }

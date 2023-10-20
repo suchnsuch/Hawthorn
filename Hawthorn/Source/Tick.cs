@@ -16,5 +16,7 @@ public interface Tick<A>
 
 #if DEBUG
 	void MarkDebugPosition(int depth, string name);
+
+	void DebugLog(DebugLogLevel level, string message, int depth=0);
 #endif
 }

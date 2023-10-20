@@ -16,6 +16,11 @@ public class BehaviorSelector<A> : BehaviorNodeContainer<A>
 		foreach (var child in Children)
 		{
 			var result = child.Run(tick);
+
+#if DEBUG
+			LogChildResult(tick, child, result);
+#endif
+
 			switch (result)
 			{
 				case Result.Succeeded:
@@ -26,6 +31,11 @@ public class BehaviorSelector<A> : BehaviorNodeContainer<A>
 
 		return Result.Failed;
 	}
+
+	public override string ToString()
+    {
+        return $"Selector({Name})";
+    }
 }
 
 public class StatefulBehaviorSelector<A> : BehaviorNodeContainer<A>, IStatefulBehaviorNode<A>
@@ -48,6 +58,11 @@ public class StatefulBehaviorSelector<A> : BehaviorNodeContainer<A>, IStatefulBe
 		for (int index = startingIndex; index < Children.Length; index++)
 		{
 			var result = Children[index].Run(tick);
+
+#if DEBUG
+			LogChildResult(tick, Children[index], result);
+#endif
+
 			switch (result)
 			{
 				case Result.Busy:
@@ -75,4 +90,9 @@ public class StatefulBehaviorSelector<A> : BehaviorNodeContainer<A>, IStatefulBe
 	{
 		tick.SetState(this, 0);
 	}
+
+	public override string ToString()
+    {
+        return $"StatefulSelector({Name})";
+    }
 }

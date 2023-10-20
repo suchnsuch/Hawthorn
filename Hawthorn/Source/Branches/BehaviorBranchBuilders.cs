@@ -86,7 +86,7 @@ public class BehaviorBranchBuilder<A> : IBehaviorNodeBuilder<A>
 	{
 		IBehaviorNode<A>[] childNodes = Children.Select(c => c.Build()).ToArray();
 
-		return Type switch
+		BehaviorNodeContainer<A> node = Type switch
 		{
 			BranchType.Sequence => new BehaviorSequence<A>(Name, childNodes),
 			BranchType.AsyncSequence => new StatefulBehaviorSequence<A>(Name, childNodes),
@@ -95,5 +95,32 @@ public class BehaviorBranchBuilder<A> : IBehaviorNodeBuilder<A>
 			BranchType.Parallel => new BehaviorParallel<A>(Name, childNodes),
 			_ => throw new Exception("Unknown type: " + Type)
 		};
+
+#if DEBUG
+		node.DebugLogging = DebugLogging;
+		return node;
+#endif
 	}
+
+#if DEBUG
+	DebugFlags DebugLogging;
+
+	public BehaviorBranchBuilder<A> LogFailures()
+	{
+		DebugLogging |= DebugFlags.Failures;
+		return this;
+	}
+
+	public BehaviorBranchBuilder<A> LogSuccesses()
+	{
+		DebugLogging |= DebugFlags.Successess;
+		return this;
+	}
+
+	public BehaviorBranchBuilder<A> LogAll()
+	{
+		DebugLogging |= DebugFlags.Failures | DebugFlags.Busy | DebugFlags.Successess;	
+		return this;
+	}
+#endif
 }

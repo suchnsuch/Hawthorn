@@ -46,5 +46,23 @@ public abstract class BehaviorNodeContainer<A> : IBehaviorNodeContainer<A>
 	{
 		tick.MarkDebugPosition(Depth, Name ?? "");
 	}
+
+	public DebugFlags DebugLogging { get; set; }
+
+	protected void LogChildResult(Tick<A> tick, IBehaviorNode<A> child, Result result)
+	{
+		if (result == Result.Failed && DebugLogging.HasFlag(DebugFlags.Failures))
+		{
+			tick.DebugLog(DebugLogLevel.Message, $"Child {Array.IndexOf(Children, child)} of {Name}, \"{child}\" failed.", Depth);
+		}
+		else if (result == Result.Busy && DebugLogging.HasFlag(DebugFlags.Busy))
+		{
+			tick.DebugLog(DebugLogLevel.Message, $"Child {Array.IndexOf(Children, child)} of {Name}, \"{child}\" is running.", Depth);
+		}
+		else if (result == Result.Succeeded && DebugLogging.HasFlag(DebugFlags.Successess))
+		{
+			tick.DebugLog(DebugLogLevel.Message, $"Child {Array.IndexOf(Children, child)} of {Name}, \"{child}\" succeeded.", Depth);
+		}
+	}
 #endif
 }
